@@ -1,0 +1,23 @@
+<div id="pageTitle">
+    <h1>New RepoInformation</h1>
+</div>
+
+<div id="toolbar">
+    <%= link_to "Back", :action => :index %>
+</div>
+
+
+<div id="content">
+
+    <form method="POST" action="<%= url_for :action => :create %>">
+	    <input type="hidden" name="id" value="<%= @repoinformation.object %>"/>
+        <ul>
+           <li>
+    			  <label>Name: </label>
+    			  <input type="text" name="repoinformation[name]"/>
+    		  </li>
+    		 </ul>
+        
+        <input type="submit" class="standardButton" value="Create" />
+    </form>
+</div>

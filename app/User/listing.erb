@@ -1,0 +1,21 @@
+<div data-role="page" style="background-image: url('/public/images/bodyBg.png');">
+<div data-role="header"  style="background:#00264C;">
+  <h1><%= Rho::RhoConfig.username %> Git Hub Listing</h1>
+   <a href="<%= url_for :action => :logout  %>"  class="ui-btn-right" data-icon="star" data-inline="true" data-theme="a">Logout</a>
+  
+
+    </div> 
+    
+<div data-role='content' style="background:none;text-shadow:none;color:white;">
+  
+
+  <ul data-role="listview"  data-theme="b" >
+    <li class="ui-li-has-count"><a href="<%= url_for :controller => :UserRepos, :action => :my_repos %>" >Your Repos</a></li>
+    <li><a href="<%= url_for :controller => :UserRepos, :action => :watching_repos %>" >Watched Repos</a></li>
+    <li><a href="<%= url_for :controller => :UserRepos, :action => :forked_repos %>" >Forked Repos</a></li>
+    <li><a href="<%= url_for :controller => :UserFollows, :action => :my_followers %>" >Followers</a></li>
+    <li><a href="<%= url_for :controller => :UserFollows, :action => :following %>" >Following</a></li>
+  </ul>
+    
+</div>
+</div>

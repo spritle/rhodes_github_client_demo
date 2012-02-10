@@ -1,0 +1,19 @@
+<div data-role="page" style="background-image: url('/public/images/bodyBg.png');" >
+
+<div data-role="header" data-position="inline" style="background:#00264C;" >
+     
+     <h1 style="text-align:center;">Git Hub Login </h1>
+     <%= @msg %>
+
+    </div> 
+
+<div data-role="content" style="background:none;text-shadow:none;color:white;">
+  <form method="POST" action="<%= url_for :action => :create %>">
+     <div data-role="fieldcontain">
+        <label for="user[username]" >  Username</label>
+        <input type="text" name="user[username]" id="user[username]"  <%=placeholder("Username") %> /><br/>
+        <input type="submit" class="standardButton" value="Login" data-theme="b"  />
+     </div>   
+  </form>
+</div>
+</div>

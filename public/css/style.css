@@ -1,0 +1,44 @@
+#repo
+{
+background: #25383C;text-shadow:none;color:white;position:absolute;top:15%;right:50%;left:10%;border-radius:250px;width:17%;height:12%;margin:2%;padding:8% 8% 5% 6%;
+z-index: 3;
+}
+#watch_repo
+{
+background:#25383C;text-shadow:none;color:white;position:absolute;top:15%;right:10%;left:50%;border-radius:250px;width:17%;height:12%;margin:2%;padding:8% 8% 5% 5%;
+z-index: 4;
+}
+#fork_repo
+{
+background:#25383C;text-shadow:none;color:white;position:absolute;top:40%;right:50%;left:10%;border-radius:250px;width:17%;height:12%;margin:2%;padding:8% 8% 5% 6%;
+z-index: 4;
+}
+#follower
+{
+background:#25383C;text-shadow:none;color:white;position:absolute;top:40%;right:10%;left:50%;border-radius:250px;width:17%;height:12%;margin:2%;padding:8% 8% 5% 5%;
+z-index: 4;
+}
+#following
+{
+background:#25383C;text-shadow:none;color:white;position:absolute;top:65%;right:50%;left:10%;border-radius:250px;width:17%;height:12%;margin:2%;padding:8% 8% 5% 5%;
+z-index: 4;
+}
+
+#coderwall
+{
+background:#25383C;text-shadow:none;color:white;position:absolute;top:65%;right:10%;left:50%;border-radius:250px;width:17%;height:12%;margin:2%;padding:8% 10% 5% 5%;
+z-index: 4;
+}
+#repo:hover
+{
+
+}
+.login
+{
+position:absolute;top:23%;left:38%;font-size:150%;
+}
+.login:hover
+{
+font-color:red;
+
+}

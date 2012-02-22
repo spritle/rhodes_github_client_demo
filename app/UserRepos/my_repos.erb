@@ -9,9 +9,8 @@
   
   <% get_res["repositories"].each do | repo | %>
   <li >
-    <a href="<%= url_for :controller => :RepoInformation, :action => :index, :query => {:name => repo["name"]}%>"><%= repo["name"] %> </a>
+    <a href="<%= url_for :controller => :RepoInformation, :action => :index, :query => {:name => repo["name"]}%>"><%= repo["name"] %></a>
     
-   
   </li>
     <% end%>
 </ul>

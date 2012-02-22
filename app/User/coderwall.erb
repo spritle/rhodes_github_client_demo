@@ -1,0 +1,47 @@
+<div data-role="page" style="background-image: url('/public/images/bodyBg.png');">
+ <div data-role="header"  style="background:#00264C;">
+  <h1><%= Rho::RhoConfig.username %> Profile in Coderwall</h1>
+   <a href="<%= url_for :action => :logout  %>"  class="ui-btn-right" data-icon="star" data-inline="true" data-theme="a">Logout</a>
+ </div> 
+  <div data-role="content">
+     <div>
+       <table>
+         <tr>
+           <td>Username</td>
+        <td><%= @response["username"] %></td>
+         </tr>
+         <tr>
+           <td>Display Name</td>
+        <td><%= @response["name"] %></td>
+         </tr>
+         <tr>
+           <td>Location</td>
+        <td><%= @response["location"]%></td>
+         </tr>
+         <tr>
+           <td>Endorsements Count</td>
+        <td><%= @response["endorsements"]%></td>
+         </tr>   
+       </table> 
+     </div>
+     
+     
+     <div>
+        <% @i = 0 %>
+        <% @badge_size = @badges.size %>
+        <% while @i < @badge_size  do %>   
+          <% @badge = @badges[@i] %>   
+          <% @i +=1 %>  
+            <ul data-role="listview" data-inset="true">
+          <li><img src="<%= @badge['badge']%>" />
+          <h3><%= @badge["name"]%></h3>
+       <p><%= @badge["description"] %></p>
+          </li> 
+       </ul>
+        <% end %>
+     </div>
+
+  </div>
+    
+  
+</div>

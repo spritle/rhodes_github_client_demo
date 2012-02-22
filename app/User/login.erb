@@ -3,17 +3,12 @@
 <div data-role="header" data-position="inline" style="background:#00264C;" >
      
      <h1 style="text-align:center;">Git Hub Login </h1>
-     <%= @msg %>
+     </div> 
 
-    </div> 
-
-<div data-role="content" style="background:none;text-shadow:none;color:white;">
-  <form method="POST" action="<%= url_for :action => :create %>">
-     <div data-role="fieldcontain">
-        <label for="user[username]" >  Username</label>
-        <input type="text" name="user[username]" id="user[username]"  <%=placeholder("Username") %> /><br/>
-        <input type="submit" class="standardButton" value="Login" data-theme="b"  />
-     </div>   
-  </form>
+<div data-role="content" style="background:none;text-shadow:none;color:white;margin:2% 2% 2% 12%;">
+      <br/><br/>
+      <a href="<%= url_for  :action => :github_login %>" ><img src="http://3.bp.blogspot.com/-KQbtlBPFT2g/TsANfZk2mJI/AAAAAAAAAbo/3jh2Hxzoqrg/s1600/github.png" width="20%"/><span class="login">Github login</span></a>
+     
+  
 </div>
 </div>

@@ -3,81 +3,96 @@ require 'helpers/browser_helper'
 
 class UserController < Rho::RhoController
   include BrowserHelper
-
+  RedirectServiceURL = "http://redirectme.to"
   
   def login
-    if Rho::RhoConfig.username==""
-    puts "USER NOT LOGGED IN"
-      
-            puts Rho::RhoConfig.username,"--------username ---------------"
-                           if @params["msg"]
-                             @msg = @params["msg"]
-                           end   
-    
-    else
-      puts "user already logged in"
-      redirect "listing"
+      puts "======login page============="
+      if Rho::RhoConfig.username==""
+      puts "USER NOT LOGGED IN"
+        
+              puts Rho::RhoConfig.username,"--------username ---------------"
+                            
+      else
+        puts "user already logged in"
+        redirect "listing"
+     
+      end
     end
    
-           
-     
-  end
-def create
-  User.delete_all
-  username =   @params['user']['username']
-  user_search_url = "https://github.com/api/v2/json/user/show/" + username
-  puts user_search_url,"++++++++________++++++++++"
-  Rho::AsyncHttp.get(
-       :url => user_search_url,
-       :callback => (url_for :action => :get_user_info),
-       :callback_param => "username=#{username}" )
-  
-  #user_details = Rho::AsyncHttp.get(:url => user_search_url, :callback => (url_for :get_user_info), :callback_param => "username=#{username}")
-   render :action => :wait
-  end
-
-  def delete
-    @user = User.find(@params['id'])
-    @user.destroy if @user
-    redirect :action => :index 
-  end
-  
- def listing
-    @user = User.find(:all).first
+ def self.getRedirectURL(local_call_back_url)
+      callback_url = RedirectServiceURL + "/" + '127.0.0.1:' + System.get_property('rhodes_port').to_s + local_call_back_url
+      puts callback_url,"----call-------------"
+      return callback_url
  end
-  
-  def get_error
-    @@error_params
-    end
-  
-  def get_user_info
-    if @params['status'] != 'ok'
-       a=@params['body']
-       puts a,"------------error--------------"
-       @@error_params = @params['body']
-      WebView.navigate (url_for :action => :login ,:query => { :msg => "User Not Found"}) 
-     #WebView.navigate ( "/app/User/login?msg=usernotfound" ) 
-  else
-       Rho::RhoConfig.username=@params['username']
-       puts Rho::RhoConfig.username,"-------super-----"
-       @user =Rho::RhoConfig.username 
-       puts @user,"_____user++++++++++///"
-       #@@get_result = @params['body']
-       
-       #@@get=@@get_result["user"]
-       #puts @@get.class,"====,,,,===="
-       #@@set=@@get["public_repo_count"] 
-       #puts @@set.class,"---...---set--..----" 
-       WebView.navigate ( url_for :action => :show_listing  )
+    
+ def self.getGHAuthURL(local_call_back_url)
+      
+      call_back_url = getRedirectURL(local_call_back_url)
+      url ="https://github.com/login/oauth/authorize?client_id=17845c73048bd1fe7dee&redirect_uri=#{call_back_url}&scope=user,public_repo,repo,gist"
+                
+      puts url ,"-----////////////////////url/////////////"
+      return url
+ end
+
+ def github_login
+    
+     local_callback_url =url_for( :action => :github_callback )
+     url = UserController.getGHAuthURL(local_callback_url)
+     puts url,"------url--......----------------" 
+     WebView.navigate(url)
+ end
+ 
+  def github_callback
+    code=@params["code"]
+   
+    puts "--------------------------------------lll===================="
+    
+    @@token=Rho::AsyncHttp.post(
+                    :url => "https://github.com/login/oauth/access_token?client_id=17845c73048bd1fe7dee&client_secret=e7e9b4337d49c70a45408efac0d5b2a3f16f0cf2&code=" + code
+                      
+                             )
+    puts @@token["body"],"=============token==============="
+    user_info = "https://github.com/api/v2/json/user/show?" + @@token["body"]
+    puts user_info,"============="
+    user=Rho::AsyncHttp.get(
+             :url => user_info,
+              )              
+    puts user,"=======================user response=============="
+    user_initial=user["body"]["user"]
+    Rho::RhoConfig.username=user_initial["login"] 
+    puts  Rho::RhoConfig.username,"----username--------------"
+    Rho::RhoConfig.token=@@token["body"] 
+    puts Rho::RhoConfig.token,"=========rho token========="
+    WebView.navigate( url_for :action => :listing )
   end
-  end
-  
-  def show_listing
-   render :action => :listing
+   def listing
+       puts  Rho::RhoConfig.username,"= ======listing username========"
+       puts "-------listing-----------"
+   end
+   def coderwall
+     @username =Rho::RhoConfig.username
+    
+    
+         auth_url =  "http://coderwall.com/#{@username}.json"  
+         result = Rho::AsyncHttp.get(:url => auth_url)  
+      puts result,"=========result========="
+      @response = result["body"]
+      puts @response,"=======response======="
+       if @response == " "
+      Alert.show_popup("you have no account in coderwall....")
+      
+       else
+         @badges = @response["badges"]  
+         render :action => :coderwall
+       end
+     
+     
    end
   
-  def logout
-    Rho::RhoConfig.username=""
-    redirect "login"
-  end
-end	
+       
+    def logout
+      Rho::RhoConfig.username=""
+      #Rho::RhoConfig.token=""
+      redirect "login"
+    end
+end 

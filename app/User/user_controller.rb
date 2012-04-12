@@ -28,7 +28,7 @@ class UserController < Rho::RhoController
  def self.getGHAuthURL(local_call_back_url)
       
       call_back_url = getRedirectURL(local_call_back_url)
-      url ="https://github.com/login/oauth/authorize?client_id=17845c73048bd1fe7dee&redirect_uri=#{call_back_url}&scope=user,public_repo,repo,gist"
+      url ="https://github.com/login/oauth/authorize?client_id=xxxxxxx&redirect_uri=#{call_back_url}&scope=user,public_repo,repo,gist"
                 
       puts url ,"-----////////////////////url/////////////"
       return url
@@ -48,7 +48,7 @@ class UserController < Rho::RhoController
     puts "--------------------------------------lll===================="
     
     @@token=Rho::AsyncHttp.post(
-                    :url => "https://github.com/login/oauth/access_token?client_id=17845c73048bd1fe7dee&client_secret=e7e9b4337d49c70a45408efac0d5b2a3f16f0cf2&code=" + code
+                    :url => "https://github.com/login/oauth/access_token?client_id=xxxx&client_secret=xxxxx&code=" + code
                       
                              )
     puts @@token["body"],"=============token==============="
